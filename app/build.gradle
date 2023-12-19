@@ -1,0 +1,41 @@
+plugins {
+    id 'application'
+}
+apply plugin: 'java-library'
+
+mainClassName = 'email.java.App'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation group: 'org.slf4j', name: 'slf4j-api', version: '1.7.25'
+    implementation group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.25'
+
+    implementation 'com.auxilii.msgparser:msgparser:1.1.15'
+
+    testImplementation 'junit:junit:4.13.2'
+
+    implementation 'com.google.guava:guava:32.1.1-jre'
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(8)
+    }
+}
+
+application {
+    mainClass = 'email.java.App'
+}
+
+task customFatJar(type: Jar) {
+    manifest {
+        attributes 'Main-Class': 'email.java.App'
+    }
+    archiveBaseName = 'all-in-one-jar'
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    from { configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
+}

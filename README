@@ -1,0 +1,7 @@
+build with dependancies ./gradlew customFatJar
+
+
+all-in-one-jar.jar pour le buidl avec les librairies
+
+
+./gradlew clean build
